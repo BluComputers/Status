@@ -6,14 +6,14 @@
     <title>Workshop Vehicle Status</title>
     <style>
         :root {
-            --vor: #ff4d4d;
-            --progress: #ffbf00;
-            --fit: #2ecc71;
+            --vor: #ff4d4d; 
+            --progress: #ffbf00; 
+            --fit: #2ecc71; 
             --planned: #ffffff;
             --unassigned: #2c3e50; 
             --plate-yellow: #ffda00;
             --bg-grey-dark: #2f3640; 
-            --bg-grey-light: #353b48;
+            --bg-grey-light: #353b48; 
             --header-grey: #1e272e;
         }
 
@@ -21,70 +21,66 @@
             font-family: 'Arial Black', Gadget, sans-serif; 
             background-color: var(--bg-grey-dark); 
             color: #f5f6fa; 
-            padding: 20px;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 20px; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
             min-height: 100vh;
         }
 
-        .main-title {
-            text-align: center;
-            color: #dcdde1;
-            text-transform: uppercase;
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
+        .main-title { 
+            text-align: center; 
+            color: #dcdde1; 
+            text-transform: uppercase; 
+            font-size: 2.2rem; 
+            margin-bottom: 30px; 
+            letter-spacing: 2px; 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .section-container {
-            width: 100%;
+        .section-container { 
+            width: 100%; 
             max-width: 1100px; 
-            margin-bottom: 30px;
+            margin-bottom: 30px; 
         }
 
-        .section-header {
-            text-align: center;
-            font-size: 1.5rem;
-            padding: 18px;
-            background: var(--header-grey);
-            color: #95afc0;
-            border-radius: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            border-bottom: 4px solid #485460;
-            margin-bottom: 25px;
+        .section-header { 
+            text-align: center; 
+            font-size: 1.5rem; 
+            padding: 18px; 
+            background: var(--header-grey); 
+            color: #95afc0; 
+            border-radius: 10px; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            border-bottom: 4px solid #485460; 
+            margin-bottom: 25px; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         /* 3x3 Grid Layout */
-        .grid-3x3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            background-color: var(--bg-grey-light);
-            padding: 30px;
-            border-radius: 15px;
+        .grid-3x3 { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px; 
+            background-color: var(--bg-grey-light); 
+            padding: 30px; 
+            border-radius: 15px; 
             box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
 
         .vehicle-box {
-            position: relative;
-            height: 130px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid rgba(0,0,0,0.4);
+            position: relative; 
+            height: 130px; 
+            border-radius: 12px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            border: 2px solid rgba(0,0,0,0.4); 
             box-shadow: 0 6px 12px rgba(0,0,0,0.3);
             transition: transform 0.2s ease;
-        }
-
-        .vehicle-box:hover {
-            transform: translateY(-2px);
         }
 
         /* Status Backgrounds */
@@ -94,109 +90,106 @@
         .status-FIT { background-color: var(--fit); }
         .status-PLANNED { background-color: var(--planned); }
 
-        .last-updated {
-            position: absolute;
-            top: 8px;
-            left: 12px;
-            font-size: 0.6rem;
-            font-family: 'Arial', sans-serif;
-            font-weight: bold;
-            color: rgba(0,0,0,0.5);
+        .last-updated { 
+            position: absolute; 
+            top: 8px; 
+            left: 12px; 
+            font-size: 0.6rem; 
+            font-family: 'Arial', sans-serif; 
+            font-weight: bold; 
+            color: rgba(0,0,0,0.5); 
             text-transform: uppercase;
         }
 
-        .status-UNASSIGNED .last-updated { color: #7f8c8d; }
-
         .plate-ui {
-            background-color: var(--plate-yellow);
-            color: #111;
-            width: 85%;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 5px;
-            font-size: 1.6rem;
-            font-weight: 900;
-            letter-spacing: 1px;
-            border: 2px solid #000;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            background-color: var(--plate-yellow); 
+            color: #111; 
+            width: 85%; 
+            height: 50px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            border-radius: 5px; 
+            font-size: 1.6rem; 
+            font-weight: 900; 
+            letter-spacing: 1px; 
+            border: 2px solid #000; 
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2); 
             margin-top: 10px;
         }
 
         .status-UNASSIGNED .plate-ui {
-            background: rgba(0,0,0,0.2);
-            color: rgba(255,255,255,0.05);
-            border: 1px dashed rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.2); 
+            color: rgba(255,255,255,0.05); 
+            border: 1px dashed rgba(255,255,255,0.1); 
             box-shadow: none;
         }
 
         .status-label { 
             font-size: 0.75rem; 
             margin-top: 10px; 
-            text-transform: uppercase;
-            font-weight: bold;
+            text-transform: uppercase; 
+            font-weight: bold; 
             color: #111;
         }
-        
+
         .status-UNASSIGNED .status-label { color: #7f8c8d; }
 
-        .edit-btn {
-            position: absolute;
-            top: 6px;
-            right: 10px;
-            background: rgba(0,0,0,0.3);
-            border: none;
-            cursor: pointer;
-            font-size: 9px;
-            color: #eee;
-            border-radius: 4px;
+        .edit-btn { 
+            position: absolute; 
+            top: 6px; 
+            right: 10px; 
+            background: rgba(0,0,0,0.3); 
+            border: none; 
+            cursor: pointer; 
+            font-size: 9px; 
+            color: #eee; 
+            border-radius: 4px; 
             padding: 4px 8px;
         }
 
-        .footer {
-            margin-top: auto;
-            text-align: center;
-            padding: 40px;
-            font-family: 'Arial', sans-serif;
-            font-size: 0.75rem;
-            color: #ffffff;
-            opacity: 0.8;
+        .footer { 
+            margin-top: auto; 
+            text-align: center; 
+            padding: 40px; 
+            font-family: 'Arial', sans-serif; 
+            font-size: 0.75rem; 
+            color: #ffffff; 
+            opacity: 0.8; 
             width: 100%;
         }
 
         /* Modal styling */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+        .modal-overlay { 
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.85); 
+            z-index: 1000; 
+            justify-content: center; 
+            align-items: center; 
         }
 
-        .modal-content {
-            background: var(--header-grey);
-            padding: 35px;
-            border-radius: 15px;
-            width: 340px;
-            border: 1px solid #485460;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        .modal-content { 
+            background: var(--header-grey); 
+            padding: 35px; 
+            border-radius: 15px; 
+            width: 340px; 
+            border: 1px solid #485460; 
         }
 
-        label { color: #95afc0; font-size: 0.85rem; display: block; margin-bottom: 8px;}
-        input, select { padding: 14px; margin-bottom: 25px; width: 100%; border-radius: 8px; background: #2f3640; color: white; border: 1px solid #485460; box-sizing: border-box; font-size: 1rem; }
-        .save-btn { background: #0097e6; color: white; padding: 14px; border: none; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; font-size: 1.1rem; }
+        input, select { 
+            padding: 14px; margin-bottom: 25px; width: 100%; border-radius: 8px; 
+            background: #2f3640; color: white; border: 1px solid #485460; box-sizing: border-box; 
+        }
 
-        /* Mobile Adjustments */
-        @media (max-width: 900px) {
-            .grid-3x3 { grid-template-columns: repeat(2, 1fr); }
+        .save-btn { 
+            background: #0097e6; color: white; padding: 14px; border: none; 
+            border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; font-size: 1.1rem;
         }
-        @media (max-width: 600px) {
-            .grid-3x3 { grid-template-columns: 1fr; }
-            .main-title { font-size: 1.6rem; }
-        }
+
+        @media (max-width: 900px) { .grid-3x3 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .grid-3x3 { grid-template-columns: 1fr; } .main-title { font-size: 1.6rem; } }
     </style>
 </head>
 <body>
@@ -215,11 +208,7 @@
     <div id="editModal" class="modal-overlay">
         <div class="modal-content">
             <h3 style="margin-top:0; color:#f5f6fa">Edit Workshop Slot</h3>
-            
-            <label>Registration Number</label>
-            <input type="text" id="modalReg" placeholder="E.g. GX26 XYZ">
-            
-            <label>Current Status</label>
+            <input type="text" id="modalReg" placeholder="Registration">
             <select id="modalStatus">
                 <option value="UNASSIGNED">Unassigned</option>
                 <option value="VOR">VOR (Red)</option>
@@ -227,81 +216,103 @@
                 <option value="FIT">Fit for Service (Green)</option>
                 <option value="PLANNED">Planned For Workshop (White)</option>
             </select>
-            
-            <button class="save-btn" onclick="saveChanges()">Update Slot</button>
-            <button onclick="closeModal()" style="background:none; border:none; color:#7f8c8d; margin-top:15px; cursor:pointer; width:100%; font-size: 0.9rem; text-decoration: underline;">Cancel</button>
+            <button class="save-btn" id="saveBtn" onclick="saveChanges()">Update Slot</button>
+            <button onclick="closeModal()" style="background:none; border:none; color:#7f8c8d; margin-top:15px; cursor:pointer; width:100%;">Cancel</button>
         </div>
     </div>
 
     <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycby-NAJQEnwUTX1Y9o9K7ZIxckjzGmlyllqRFgE7sgLURolGA9nDwETJlVfxvDD9LpLMOA/exec"; 
         const PIN = "0207";
         let activeBoxId = null;
 
         function buildGrid() {
             const container = document.getElementById('workshop-grid');
-            // 3x3 Grid = 9 Boxes
             for (let i = 1; i <= 9; i++) {
                 const uid = `slot-${i}`;
                 const box = document.createElement('div');
                 box.id = `box-${uid}`;
                 box.className = 'vehicle-box status-UNASSIGNED';
                 box.innerHTML = `
-                    <div class="last-updated" id="time-${uid}">Updated: --:--</div>
+                    <div class="last-updated" id="time-${uid}">Loading...</div>
                     <button class="edit-btn" onclick="requestEdit('${uid}')">EDIT</button>
                     <div class="plate-ui" id="reg-${uid}">---</div>
                     <div class="status-label" id="label-${uid}">Unassigned</div>
                 `;
                 container.appendChild(box);
             }
+            fetchData();
         }
 
-        window.onload = buildGrid;
-
-        function requestEdit(id) {
-            const entry = prompt("Enter PIN:");
-            if (entry === PIN) {
-                activeBoxId = id;
-                document.getElementById('editModal').style.display = 'flex';
-                const currentVal = document.getElementById(`reg-${id}`).innerText;
-                document.getElementById('modalReg').value = (currentVal === "---") ? "" : currentVal;
-            } else if (entry !== null) {
-                alert("Incorrect PIN");
+        async function fetchData() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                data.forEach(row => {
+                    const [slotId, reg, status, time] = row;
+                    const box = document.getElementById(`box-${slotId}`);
+                    if (box) {
+                        document.getElementById(`reg-${slotId}`).innerText = reg;
+                        document.getElementById(`time-${slotId}`).innerText = `Updated: ${time}`;
+                        box.className = `vehicle-box status-${status}`;
+                        
+                        const labelMap = {
+                            'UNASSIGNED': 'Unassigned', 'VOR': 'VOR', 'INPROGRESS': 'In Progress', 
+                            'FIT': 'Fit for Service', 'PLANNED': 'Planned For Workshop'
+                        };
+                        document.getElementById(`label-${slotId}`).innerText = labelMap[status] || 'Unassigned';
+                    }
+                });
+            } catch (e) { 
+                console.log("No data found yet.");
+                const times = document.querySelectorAll('.last-updated');
+                times.forEach(t => t.innerText = "Updated: --:--");
             }
         }
 
-        function saveChanges() {
-            const regValue = document.getElementById('modalReg').value.trim().toUpperCase() || "---";
-            const statusValue = document.getElementById('modalStatus').value;
-            const box = document.getElementById(`box-${activeBoxId}`);
-            
-            // Update UI Elements
-            document.getElementById(`reg-${activeBoxId}`).innerText = regValue;
-            
-            const labelMap = {
-                'UNASSIGNED': 'Unassigned',
-                'VOR': 'VOR',
-                'INPROGRESS': 'In Progress', 
-                'FIT': 'Fit for Service',
-                'PLANNED': 'Planned For Workshop'
-            };
-            document.getElementById(`label-${activeBoxId}`).innerText = labelMap[statusValue];
-            
-            // Generate Timestamp
+        function requestEdit(id) {
+            if (prompt("Enter PIN:") === PIN) {
+                activeBoxId = id;
+                document.getElementById('editModal').style.display = 'flex';
+                const currentReg = document.getElementById(`reg-${id}`).innerText;
+                document.getElementById('modalReg').value = currentReg === "---" ? "" : currentReg;
+            } else { alert("Incorrect PIN"); }
+        }
+
+        async function saveChanges() {
+            const reg = document.getElementById('modalReg').value.trim().toUpperCase() || "---";
+            const status = document.getElementById('modalStatus').value;
             const now = new Date();
-            const timeStr = now.toLocaleDateString() + ' ' + 
-                            now.getHours().toString().padStart(2, '0') + ':' + 
-                            now.getMinutes().toString().padStart(2, '0');
-            document.getElementById(`time-${activeBoxId}`).innerText = `Updated: ${timeStr}`;
-
-            // Apply new status color
-            box.className = `vehicle-box status-${statusValue}`;
+            const time = now.toLocaleDateString() + ' ' + now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
             
-            closeModal();
+            const btn = document.getElementById('saveBtn');
+            btn.innerText = "Syncing...";
+            btn.disabled = true;
+
+            try {
+                await fetch(API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Essential for Google Apps Script POST
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ slotId: activeBoxId, reg: reg, status: status, time: time })
+                });
+                
+                // Since no-cors doesn't return a response, we wait a moment then reload
+                setTimeout(() => {
+                    btn.innerText = "Update Slot";
+                    btn.disabled = false;
+                    closeModal();
+                    location.reload();
+                }, 800);
+            } catch (e) {
+                alert("Error syncing data.");
+                btn.disabled = false;
+            }
         }
 
-        function closeModal() {
-            document.getElementById('editModal').style.display = 'none';
-        }
+        function closeModal() { document.getElementById('editModal').style.display = 'none'; }
+        window.onload = buildGrid;
     </script>
 </body>
 </html>
