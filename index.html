@@ -59,7 +59,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* 3x3 Grid Layout */
         .grid-3x3 { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
@@ -80,10 +79,8 @@
             align-items: center; 
             border: 2px solid rgba(0,0,0,0.4); 
             box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-            transition: transform 0.2s ease;
         }
 
-        /* Status Backgrounds */
         .status-UNASSIGNED { background-color: var(--unassigned); }
         .status-VOR { background-color: var(--vor); }
         .status-INPROGRESS { background-color: var(--progress); }
@@ -151,12 +148,19 @@
         .footer { 
             margin-top: auto; 
             text-align: center; 
-            padding: 40px; 
+            padding: 20px; 
             font-family: 'Arial', sans-serif; 
             font-size: 0.75rem; 
             color: #ffffff; 
             opacity: 0.8; 
             width: 100%;
+        }
+
+        .refresh-tag {
+            font-size: 0.6rem;
+            color: #2ecc71;
+            margin-top: 5px;
+            display: block;
         }
 
         /* Modal styling */
@@ -203,6 +207,7 @@
 
     <div class="footer">
         © Copyright 2026 Tyler Lewis - BluComputers
+        <span class="refresh-tag">● Live Auto-Refresh (5m) Active</span>
     </div>
 
     <div id="editModal" class="modal-overlay">
@@ -264,9 +269,7 @@
                     }
                 });
             } catch (e) { 
-                console.log("No data found yet.");
-                const times = document.querySelectorAll('.last-updated');
-                times.forEach(t => t.innerText = "Updated: --:--");
+                console.log("Sync error or first run.");
             }
         }
 
@@ -292,27 +295,33 @@
             try {
                 await fetch(API_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Essential for Google Apps Script POST
+                    mode: 'no-cors',
                     cache: 'no-cache',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ slotId: activeBoxId, reg: reg, status: status, time: time })
                 });
                 
-                // Since no-cors doesn't return a response, we wait a moment then reload
                 setTimeout(() => {
-                    btn.innerText = "Update Slot";
-                    btn.disabled = false;
-                    closeModal();
                     location.reload();
                 }, 800);
             } catch (e) {
-                alert("Error syncing data.");
+                alert("Error syncing.");
                 btn.disabled = false;
             }
         }
 
         function closeModal() { document.getElementById('editModal').style.display = 'none'; }
+        
+        // Initial build
         window.onload = buildGrid;
+
+        // Auto Refresh Timer (300,000ms = 5 minutes)
+        setInterval(() => {
+            if (document.getElementById('editModal').style.display !== 'flex') {
+                location.reload();
+            }
+        }, 300000); 
+
     </script>
 </body>
 </html>
