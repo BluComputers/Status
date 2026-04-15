@@ -34,9 +34,19 @@
             color: #dcdde1; 
             text-transform: uppercase; 
             font-size: 2.2rem; 
-            margin-bottom: 30px; 
+            margin-bottom: 5px; 
             letter-spacing: 2px; 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .refresh-timer-display {
+            font-family: 'Arial', sans-serif;
+            font-size: 0.9rem;
+            color: #2ecc71;
+            margin-bottom: 25px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(46, 204, 113, 0.4);
         }
 
         .section-container { 
@@ -55,8 +65,19 @@
             text-transform: uppercase; 
             letter-spacing: 1.5px; 
             border-bottom: 4px solid #485460; 
-            margin-bottom: 25px; 
+            margin-bottom: 10px; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .protocol-notice {
+            color: #ff4d4d;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            padding: 0 20px;
+            line-height: 1.4;
         }
 
         .grid-3x3 { 
@@ -119,7 +140,6 @@
             background: rgba(0,0,0,0.2); 
             color: rgba(255,255,255,0.05); 
             border: 1px dashed rgba(255,255,255,0.1); 
-            box-shadow: none;
         }
 
         .status-label { 
@@ -156,14 +176,6 @@
             width: 100%;
         }
 
-        .refresh-tag {
-            font-size: 0.6rem;
-            color: #2ecc71;
-            margin-top: 5px;
-            display: block;
-        }
-
-        /* Modal styling */
         .modal-overlay { 
             display: none; 
             position: fixed; 
@@ -199,15 +211,18 @@
 <body>
 
     <h1 class="main-title">Workshop Vehicle Status</h1>
+    <div class="refresh-timer-display" id="refreshTimer">Live Vehicle Update will refresh in 05:00</div>
 
     <div class="section-container">
         <div class="section-header">Vehicles Assigned to Workshop</div>
+        <div class="protocol-notice">
+            The vehicle status will only be changed once a jobcard has been completed, and vehicle has been released from the workshop. The Status change will be edited by the Workshop Manager Only.
+        </div>
         <div id="workshop-grid" class="grid-3x3"></div>
     </div>
 
     <div class="footer">
         © Copyright 2026 Tyler Lewis - BluComputers
-        <span class="refresh-tag">● Live Auto-Refresh (5m) Active</span>
     </div>
 
     <div id="editModal" class="modal-overlay">
@@ -230,6 +245,7 @@
         const API_URL = "https://script.google.com/macros/s/AKfycby-NAJQEnwUTX1Y9o9K7ZIxckjzGmlyllqRFgE7sgLURolGA9nDwETJlVfxvDD9LpLMOA/exec"; 
         const PIN = "0207";
         let activeBoxId = null;
+        let timeLeft = 300; 
 
         function buildGrid() {
             const container = document.getElementById('workshop-grid');
@@ -260,7 +276,6 @@
                         document.getElementById(`reg-${slotId}`).innerText = reg;
                         document.getElementById(`time-${slotId}`).innerText = `Updated: ${time}`;
                         box.className = `vehicle-box status-${status}`;
-                        
                         const labelMap = {
                             'UNASSIGNED': 'Unassigned', 'VOR': 'VOR', 'INPROGRESS': 'In Progress', 
                             'FIT': 'Fit for Service', 'PLANNED': 'Planned For Workshop'
@@ -268,9 +283,7 @@
                         document.getElementById(`label-${slotId}`).innerText = labelMap[status] || 'Unassigned';
                     }
                 });
-            } catch (e) { 
-                console.log("Sync error or first run.");
-            }
+            } catch (e) { console.log("Fetch error."); }
         }
 
         function requestEdit(id) {
@@ -287,7 +300,6 @@
             const status = document.getElementById('modalStatus').value;
             const now = new Date();
             const time = now.toLocaleDateString() + ' ' + now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
-            
             const btn = document.getElementById('saveBtn');
             btn.innerText = "Syncing...";
             btn.disabled = true;
@@ -297,13 +309,9 @@
                     method: 'POST',
                     mode: 'no-cors',
                     cache: 'no-cache',
-                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ slotId: activeBoxId, reg: reg, status: status, time: time })
                 });
-                
-                setTimeout(() => {
-                    location.reload();
-                }, 800);
+                setTimeout(() => location.reload(), 800);
             } catch (e) {
                 alert("Error syncing.");
                 btn.disabled = false;
@@ -311,17 +319,26 @@
         }
 
         function closeModal() { document.getElementById('editModal').style.display = 'none'; }
-        
-        // Initial build
-        window.onload = buildGrid;
 
-        // Auto Refresh Timer (300,000ms = 5 minutes)
-        setInterval(() => {
-            if (document.getElementById('editModal').style.display !== 'flex') {
-                location.reload();
-            }
-        }, 300000); 
+        function startTimer() {
+            setInterval(() => {
+                if (document.getElementById('editModal').style.display !== 'flex') {
+                    timeLeft--;
+                    if (timeLeft <= 0) location.reload();
 
+                    const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+                    const secs = (timeLeft % 60).toString().padStart(2, '0');
+                    document.getElementById('refreshTimer').innerText = `Live Vehicle Update will refresh in ${mins}:${secs}`;
+                } else {
+                    document.getElementById('refreshTimer').innerText = `Refresh paused while editing...`;
+                }
+            }, 1000);
+        }
+
+        window.onload = () => {
+            buildGrid();
+            startTimer();
+        };
     </script>
 </body>
 </html>
